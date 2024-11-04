@@ -1,19 +1,32 @@
 package my.project.org;
 
+import jakarta.annotation.Resource;
 import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
+import org.infinispan.Cache;
 import org.jboss.logging.Logger;
-
-import javax.cache.annotation.CacheKey;
-import javax.cache.annotation.CacheResult;
 
 @Stateless
 public class SimpleService {
 
     private static Logger LOG = Logger.getLogger(SimpleService.class);
 
-    @CacheResult
-    public String sayHello(@CacheKey String name) {
-        LOG.info(System.nanoTime());
-        return "Hello " + name;
+    /*@Resource(lookup = "java:jboss/infinispan/cache/simpleContainer/default")
+    private Cache<String, String> simpleCache;*/
+
+    @Inject
+    @SimpleCache
+    private Cache<String, String> cache;
+
+    public String sayHello(String user) {
+
+        String cachedValue = cache.get(user);
+        if (cachedValue == null) {
+            cachedValue = "Hello " + user;
+            cache.put(user, cachedValue);
+        } else {
+            return cachedValue + " from Cache";
+        }
+        return cachedValue;
     }
 }

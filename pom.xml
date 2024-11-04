@@ -39,6 +39,8 @@
         <!-- Define the version of the JBoss BOMs we want to import to specify tested stacks. -->
         <version.wildfly.bom>34.0.0.Final</version.wildfly.bom>
 
+        <version.infinispan>14.0.32.Final</version.infinispan>
+
         <!--Use JUnit 5 here - the WildFly bom still brings 4.x -->
         <version.junit5>5.10.1</version.junit5>
 
@@ -139,6 +141,14 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>org.infinispan</groupId>
+                <artifactId>infinispan-bom</artifactId>
+                <version>${version.infinispan}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -195,20 +205,18 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.cache</groupId>
-            <artifactId>cache-api</artifactId>
-            <version>1.1.1</version>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-core-jakarta</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.jsr107.ri</groupId>
-            <artifactId>cache-ri-impl</artifactId>
-            <version>1.1.1</version>
+            <groupId>org.infinispan.protostream</groupId>
+            <artifactId>protostream</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.jsr107.ri</groupId>
-            <artifactId>cache-annotations-ri-cdi</artifactId>
-            <version>1.1.1</version>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-cdi-embedded-jakarta</artifactId>
         </dependency>
+
         <!-- Test scope dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -259,11 +267,11 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>${version.war.plugin}</version>
                 <configuration>
-                    <!--<archive>
+                    <archive>
                         <manifestEntries>
-                            <Dependencies>org.infinispan:ispn-14.0 services</Dependencies>
+                            <Dependencies>jdk.unsupported</Dependencies>
                         </manifestEntries>
-                    </archive>-->
+                    </archive>
                     <!-- Jakarta EE doesn't require web.xml, Maven needs to catch up! -->
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>

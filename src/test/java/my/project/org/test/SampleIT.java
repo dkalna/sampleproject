@@ -54,7 +54,11 @@ public class SampleIT {
     @Test
     public void test() {
         // This line will be written on the server console.
-        System.out.println("Test is invoked... " + simpleService.sayHello("test"));
-        System.out.println("Test is invoked... " + simpleService.sayHello("test"));
+        System.out.println("Test is invoked... " + simpleService.sayHello("test1"));
+        System.out.println("Test is invoked... " + simpleService.sayHello("test2"));
+        System.out.println("Test is invoked... " + simpleService.sayHello("test3"));
+        System.out.println("Test is invoked... " + simpleService.sayHello("test1"));
+        System.out.println("Test is invoked... " + simpleService.sayHello("test4"));
+        System.out.println("Test is invoked... " + simpleService.sayHello("test2"));
     }
 }
