@@ -216,6 +216,12 @@
             <groupId>org.infinispan</groupId>
             <artifactId>infinispan-cdi-embedded-jakarta</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-clustering-infinispan-extension</artifactId>
+            <version>34.0.0.Final</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- Test scope dependencies -->
         <dependency>
@@ -269,7 +275,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Dependencies>jdk.unsupported</Dependencies>
+                            <Dependencies>jdk.unsupported, org.jboss.as.clustering.infinispan, org.jboss.as.clustering.infinispan</Dependencies>
                         </manifestEntries>
                     </archive>
                     <!-- Jakarta EE doesn't require web.xml, Maven needs to catch up! -->

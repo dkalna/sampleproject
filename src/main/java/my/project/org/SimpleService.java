@@ -4,6 +4,8 @@ import jakarta.annotation.Resource;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import org.infinispan.Cache;
+import org.jboss.as.clustering.infinispan.cache.LazyCache;
+import org.jboss.as.clustering.infinispan.manager.DefaultCacheContainer;
 import org.jboss.logging.Logger;
 
 @Stateless
@@ -11,12 +13,15 @@ public class SimpleService {
 
     private static Logger LOG = Logger.getLogger(SimpleService.class);
 
-    /*@Resource(lookup = "java:jboss/infinispan/cache/simpleContainer/default")
-    private Cache<String, String> simpleCache;*/
+    @Resource(lookup = "java:jboss/infinispan/cache/simpleContainer/default")
+    private LazyCache<String, String> cache;
+
+    @Resource(lookup = "java:jboss/infinispan/container/simpleContainer")
+    private DefaultCacheContainer container;
 
     @Inject
     @SimpleCache
-    private Cache<String, String> cache;
+    private Cache<String, String> simpleCache;
 
     public String sayHello(String user) {
 
@@ -25,7 +30,7 @@ public class SimpleService {
             cachedValue = "Hello " + user;
             cache.put(user, cachedValue);
         } else {
-            return cachedValue + " from Cache";
+            return cachedValue + " from cache";
         }
         return cachedValue;
     }

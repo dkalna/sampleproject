@@ -1,7 +1,5 @@
 package my.project.org.test;
 
-import java.io.File;
-
 import jakarta.inject.Inject;
 import my.project.org.SimpleService;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -10,8 +8,11 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.importer.ZipImporter;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.io.File;
 
 /**
  * Sample integration test: demonstrates how to create the WAR file using the ShrinkWrap API.
@@ -49,16 +50,15 @@ public class SampleIT {
 
     /**
      * A sample test...
-     *
      */
     @Test
     public void test() {
         // This line will be written on the server console.
-        System.out.println("Test is invoked... " + simpleService.sayHello("test1"));
-        System.out.println("Test is invoked... " + simpleService.sayHello("test2"));
-        System.out.println("Test is invoked... " + simpleService.sayHello("test3"));
-        System.out.println("Test is invoked... " + simpleService.sayHello("test1"));
-        System.out.println("Test is invoked... " + simpleService.sayHello("test4"));
-        System.out.println("Test is invoked... " + simpleService.sayHello("test2"));
+        Assertions.assertEquals("Hello test1", simpleService.sayHello("test1"));
+        Assertions.assertEquals("Hello test2", simpleService.sayHello("test2"));
+        Assertions.assertEquals("Hello test3", simpleService.sayHello("test3"));
+        Assertions.assertEquals("Hello test1 from cache", simpleService.sayHello("test1"));
+        Assertions.assertEquals("Hello test4", simpleService.sayHello("test4"));
+        Assertions.assertEquals("Hello test2 from cache", simpleService.sayHello("test2"));
     }
 }
